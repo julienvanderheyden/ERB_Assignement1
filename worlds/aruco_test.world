@@ -1,0 +1,393 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    
+    
+    
+    
+    <state world_name='default'>
+      <sim_time>32 957000000</sim_time>
+      <real_time>33 194128285</real_time>
+      <wall_time>1638975203 443225571</wall_time>
+      <iterations>32957</iterations>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='marker20_box'>
+        <link name='link_20'>
+          <pose> 1.0 0 0.13 0 0 0</pose>
+        </link>
+        <link name='marker20'>
+          <pose> 0.9 0 0.13 0 1.57 0</pose>
+        </link>
+      </model>
+      <model name='marker21_box'>
+        <link name='link_21'>
+          <pose>0.309 0.951 0.13 0 0 1.256</pose>
+        </link>
+        <link name='marker21'>
+          <pose>0.278 0.856 0.13 0 1.57 1.256</pose>
+        </link>
+      </model>
+      <model name='marker22_box'>
+        <link name='link_22'>
+          <pose>-0.809 0.587 0.13 0 0 2.513</pose>
+        </link>
+        <link name='marker22'>
+          <pose>-0.728 0.529 0.13 0 1.57 2.513</pose>
+        </link>
+      </model>
+      <model name='marker23_box'>
+        <link name='link_23'>
+          <pose>-0.809 -0.587 0.13 0 0 -2.513</pose>
+        </link>
+        <link name='marker23'>
+          <pose>-0.728 -0.529 0.13 0 1.57 -2.513</pose>
+        </link>
+      </model>
+      <model name='marker24_box'>
+        <link name='link_24'>
+          <pose>0.309 -0.951 0.13 0 0 -1.256</pose>
+        </link>
+        <link name='marker24'>
+          <pose>0.278 -0.856 0.13 0 1.57 -1.256</pose>
+        </link>
+      </model>
+      
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    
+    <model name='marker20_box'>
+  <!-- Define the base box link -->
+  <link name='link_20'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.2</size> <!-- Box dimensions -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name> <!-- Default gray material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define the marker link, with Aruco texture -->
+  <link name='marker20'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.001</size> <!-- Thin surface for Aruco marker -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://marker20/material/scripts</uri>
+          <uri>model://marker20/material/textures</uri>
+          <name>Aruco/marker20</name> <!-- Aruco marker material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed joint to connect the box and the marker -->
+  <joint name='link_20_marker_joint' type='fixed'>
+    <parent>link_20</parent>
+    <child>marker20</child>
+  </joint>
+
+  <!-- Optional: Make the model static if it doesn't need to move -->
+  <static>1</static>
+</model>
+
+<model name='marker21_box'>
+  <!-- Define the base box link -->
+  <link name='link_21'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.2</size> <!-- Box dimensions -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name> <!-- Default gray material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define the marker link, with Aruco texture -->
+  <link name='marker21'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.001</size> <!-- Thin surface for Aruco marker -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://marker21/material/scripts</uri>
+          <uri>model://marker21/material/textures</uri>
+          <name>Aruco/marker21</name> <!-- Aruco marker material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed joint to connect the box and the marker -->
+  <joint name='link_21_marker_joint' type='fixed'>
+    <parent>link_21</parent>
+    <child>marker21</child>
+  </joint>
+
+  <!-- Optional: Make the model static if it doesn't need to move -->
+  <static>1</static>
+</model>
+<model name='marker22_box'>
+  <!-- Define the base box link -->
+  <link name='link_22'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.2</size> <!-- Box dimensions -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name> <!-- Default gray material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define the marker link, with Aruco texture -->
+  <link name='marker22'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.001</size> <!-- Thin surface for Aruco marker -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://marker22/material/scripts</uri>
+          <uri>model://marker22/material/textures</uri>
+          <name>Aruco/marker22</name> <!-- Aruco marker material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed joint to connect the box and the marker -->
+  <joint name='link_22_marker_joint' type='fixed'>
+    <parent>link_22</parent>
+    <child>marker22</child>
+  </joint>
+
+  <!-- Optional: Make the model static if it doesn't need to move -->
+  <static>1</static>
+</model>
+<model name='marker23_box'>
+  <!-- Define the base box link -->
+  <link name='link_23'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.2</size> <!-- Box dimensions -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name> <!-- Default gray material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define the marker link, with Aruco texture -->
+  <link name='marker23'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.001</size> <!-- Thin surface for Aruco marker -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://marker23/material/scripts</uri>
+          <uri>model://marker23/material/textures</uri>
+          <name>Aruco/marker23</name> <!-- Aruco marker material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed joint to connect the box and the marker -->
+  <joint name='link_23_marker_joint' type='fixed'>
+    <parent>link_23</parent>
+    <child>marker23</child>
+  </joint>
+
+  <!-- Optional: Make the model static if it doesn't need to move -->
+  <static>1</static>
+</model>
+<model name='marker24_box'>
+  <!-- Define the base box link -->
+  <link name='link_24'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.2</size> <!-- Box dimensions -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name> <!-- Default gray material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define the marker link, with Aruco texture -->
+  <link name='marker24'>
+    <visual name='visual'>
+      <geometry>
+        <box>
+          <size>0.2 0.2 0.001</size> <!-- Thin surface for Aruco marker -->
+        </box>
+      </geometry>
+      <material>
+        <script>
+          <uri>model://marker24/material/scripts</uri>
+          <uri>model://marker24/material/textures</uri>
+          <name>Aruco/marker24</name> <!-- Aruco marker material -->
+        </script>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed joint to connect the box and the marker -->
+  <joint name='link_24_marker_joint' type='fixed'>
+    <parent>link_24</parent>
+    <child>marker24</child>
+  </joint>
+
+  <!-- Optional: Make the model static if it doesn't need to move -->
+  <static>1</static>
+</model>
+    
+    
+    
+   
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>1.46238 -2.04832 3.2554 -0 0.894029 2.4788</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

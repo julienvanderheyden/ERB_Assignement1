@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="model" default="$(find assignment1_erb)/urdf/robot4.xacro" />
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="extra_gazebo_args" default=""/>
+  <arg name="gui" default="true"/>
+  <arg name="recording" default="false"/>
+  <arg name="world" default="aruco_test" />
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="physics" default="ode"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" value="$(find assignment1_erb)/worlds/$(arg world).world"/>
+  <arg name="respawn_gazebo" default="false"/>
+  <arg name="use_clock_frequency" default="false"/>
+  <arg name="pub_clock_frequency" default="100"/>
+  <!-- This argument decides wheter the camera will rotate directly or the robot will rotate thanks to differential drive -->
+  <arg name="camera_joint" default="false" />  
+  <arg name="assignment1_erb_path" default="$(find assignment1_erb)/models" /> 
+  
+  <!-- set use_sim_time flag -->
+  <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+  
+  <!-- set command arguments -->
+  <arg unless="$(arg paused)" name="command_arg1" value=""/>
+  <arg     if="$(arg paused)" name="command_arg1" value="-u"/>
+  <arg unless="$(arg recording)" name="command_arg2" value=""/>
+  <arg     if="$(arg recording)" name="command_arg2" value="-r"/>
+  <arg unless="$(arg verbose)" name="command_arg3" value=""/>
+  <arg     if="$(arg verbose)" name="command_arg3" value="--verbose"/>
+  <arg unless="$(arg debug)" name="script_type" value="gzserver"/>
+  <arg     if="$(arg debug)" name="script_type" value="debug"/>
+  
+  <!-- Set GAZEBO_MODEL_PATH to include your package's models directory -->
+  <!--<env name="GAZEBO_MODEL_PATH" value="$(find robot_urdf)/models:$(env GAZEBO_MODEL_PATH)" />-->
+  <env name="GAZEBO_MODEL_PATH" value="$(optenv GAZEBO_MODEL_PATH ''):$(arg assignment1_erb_path)" />
+
+  
+  <!-- start gazebo server-->
+  <group if="$(arg use_clock_frequency)">
+    <param name="gazebo/pub_clock_frequency" value="$(arg pub_clock_frequency)" />
+  </group>
+  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" output="screen"
+	args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) $(arg extra_gazebo_args) $(arg world_name)" />
+	
+  <!-- start gazebo client -->
+  <group if="$(arg gui)">
+    <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
+  </group>
+
+  <!-- We resume the logic in empty_world.launch -->
+   <!--<include file="$(find gazebo_ros)/launch/empty_world.launch"> -->
+    <!--<arg name="paused" value="true"/>-->
+  <!--</include>-->
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description" 
+	 command="$(find xacro)/xacro --inorder $(arg model)" />
+	 
+  <!-- Start Rviz -->  
+   <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node>
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> 
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.rviz" />
+   <node name="rotate_camera_joint" pkg="robot_urdf" type="rotate_camera_joint.py" output="screen" if="$(arg camera_joint)"/>
+   <node name="rotate_robot" pkg="robot_urdf" type="rotate_robot.py" output="screen" unless="$(arg camera_joint)" />
+   <node name="aruco_detector_node" pkg="robot_urdf" type="aruco_detector_node" output="screen"/>
+
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model robot1 -param robot_description -z 0.05"/> 
+	
+   <rosparam file="$(find assignment1_erb)/config/camera_joint_control_config.yaml" command="load" ns="/robot" />
+
+   <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen" args="--namespace=/robot
+        joint_state_controller
+        camera_joint_velocity_controller
+        --shutdown-timeout 3">
+    </node>
+
+
+</launch>
