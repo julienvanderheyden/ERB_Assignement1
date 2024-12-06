@@ -49,10 +49,26 @@ Once the launch file is running, start the simulation in Gazebo to enable the ro
 
 ## **Dependencies**
 
-Ensure the following packages and tools are installed:
-- ROS (Noetic or your preferred distribution)
-- Gazebo Simulator
-- [aruco_ros](https://github.com/CarmineD8/aruco_ros) package for ArUco marker detection
+Ensure the following dependencies are installed to run the package:
+
+### **Core ROS Dependencies**
+- `roscpp`: Core library for C++ nodes.
+- `std_msgs`: Standard message types for communication in ROS.
+- `sensor_msgs`: For working with sensor data, such as camera images.
+
+### **Robot Model Dependencies**
+- `urdf`: Parses and handles the robot model in URDF format.
+- `xacro`: Processes `.xacro` files used for robot description.
+
+### **Computer Vision Dependencies**
+- `cv_bridge`: Converts between ROS image messages and OpenCV image formats.
+- `image_transport`: Publishes and subscribes to image topics efficiently.
+
+### **ArUco Marker Detection**
+- `aruco_ros`: ROS package for detecting and processing ArUco markers.
+
+### **Build Tool**
+- `catkin`: The build tool for compiling the ROS package (usually pre-installed).
 
 ---
 
