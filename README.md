@@ -36,9 +36,9 @@ Start the ROS launch file to initialize the environment and robot. You can choos
 In this mode, the robot rotates on its axis to identify the markers.
 
 2. **Camera Rotated Independtly**:
-  ```bash
-  roslaunch assignment1_erb assignment1_erb.launch camera_joint:=true
-  ```
+   ```bash
+   roslaunch assignment1_erb assignment1_erb.launch camera_joint:=true
+   ```
 In this mode, the camera rotates on its axis while the robot remains stationary.
 
 ### **Step 2: Start the Gazebo Simulation**
